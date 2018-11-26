@@ -1,0 +1,132 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "485fa3f4-d2b3-4a70-98be-c143494b684f": {
+        "id": "485fa3f4-d2b3-4a70-98be-c143494b684f",
+        "parent": null,
+        "name": "Test",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "bf1a70a5-7fd3-42a6-9ad6-5efc451eba6c",
+          "21954ccc-e41d-4ba5-8915-a64eef75c40d"
+        ],
+        "isRemovable": false,
+        "filePath": "Test"
+      },
+      "bf1a70a5-7fd3-42a6-9ad6-5efc451eba6c": {
+        "id": "bf1a70a5-7fd3-42a6-9ad6-5efc451eba6c",
+        "parent": "485fa3f4-d2b3-4a70-98be-c143494b684f",
+        "name": "function.js",
+        "type": "LAMBDA_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "Test/function.js",
+        "code": "let google = require('googleapis').google;\nlet _auth = require('./Authorizer');\nconst datastore = google.datastore('v1');\n\nexports.handler = function (request, response) {\n    datastore.projects.beginTransaction({\n        projectId: process.env.GCP_PROJECT,\n        resource: {\n            transactionOptions: {\n                readWrite: {}\n            }\n        }\n    }).then(response => {\n        console.log(response.data);           // successful response\n        /*\n        response.data = {\n            \"transaction\": \"<transaction ID>\"\n        }\n        */\n    })\n        .catch(err => {\n            console.log(err, err.stack); // an error occurred\n        });\n\n    response.send({ \"message\": \"Successfully executed\" });\n}",
+        "triggers": [
+          {
+            "resourceName": "http-trigger",
+            "config": {}
+          }
+        ],
+        "config": {
+          "runtime": "nodejs8.10",
+          "timeout": 60,
+          "memory": 128,
+          "triggerType": 0
+        },
+        "testCases": {
+          "1dae9778-01ca-4f90-8a6a-09ecd13273ff": {
+            "id": "1dae9778-01ca-4f90-8a6a-09ecd13273ff",
+            "name": "Unnamed event",
+            "functionId": "bf1a70a5-7fd3-42a6-9ad6-5efc451eba6c",
+            "event": "{\n    \"key1\": \"value1\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}"
+          }
+        }
+      },
+      "d22735e0-1e2b-4ae4-92e4-0879d73f7603": {
+        "id": "d22735e0-1e2b-4ae4-92e4-0879d73f7603",
+        "parent": null,
+        "name": "index.js",
+        "type": "JS_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "index.js",
+        "code": "// This file is used to register all your cloud functions in GCP.\n// DO NOT EDIT/DELETE THIS, UNLESS YOU KNOW WHAT YOU ARE DOING.\n\nexports.Testfunction = require(\"./Test/function.js\").handler;",
+        "triggers": []
+      },
+      "21954ccc-e41d-4ba5-8915-a64eef75c40d": {
+        "id": "21954ccc-e41d-4ba5-8915-a64eef75c40d",
+        "parent": "485fa3f4-d2b3-4a70-98be-c143494b684f",
+        "name": "Authorizer.js",
+        "type": "JS_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "Test/Authorizer.js",
+        "code": "const google = require(\"googleapis\").google;\n\ngoogle.options({auth: new google.auth.Compute()});",
+        "triggers": []
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "485fa3f4-d2b3-4a70-98be-c143494b684f",
+    "openFiles": [
+      "bf1a70a5-7fd3-42a6-9ad6-5efc451eba6c"
+    ],
+    "currentFileId": "bf1a70a5-7fd3-42a6-9ad6-5efc451eba6c",
+    "resources": {
+      "http-trigger": {
+        "name": "http-trigger",
+        "type": "http-trigger",
+        "config": {},
+        "globallyEditable": false
+      },
+      "datastore": {
+        "name": "datastore",
+        "type": "datastore",
+        "config": {},
+        "globallyEditable": false
+      }
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "AWS_REGION",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "googleapis": {
+          "name": "googleapis",
+          "version": "29.0.0",
+          "notRemovable": false
+        }
+      }
+    },
+    "lambdaId": "bf1a70a5-7fd3-42a6-9ad6-5efc451eba6c"
+  },
+  "PROJECT_META": {
+    "projectName": "Test",
+    "projectDescription": "",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east1",
+    "platform": "GCP",
+    "lastSave": 1543227624646,
+    "platformRegions": {
+      "AWS": "us-east-1"
+    }
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "Test",
+      "url": "https://github.com/Kumudikatest/Test12"
+    }
+  }
+}
